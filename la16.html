@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Inventory Check</title>
+
+<style>
+body{font-family:Arial;text-align:center;margin-top:80px}
+input{font-size:28px;padding:10px;width:300px;margin:20px}
+</style>
+
+</head>
+
+<body>
+
+<h2>Inventory Check</h2>
+
+Location<br>
+<input id="loc" autofocus>
+
+<br>
+
+SKU<br>
+<input id="sku">
+
+<script>
+
+let currentLoc=""
+
+let api="https://script.google.com/macros/s/AKfycbxvwT0Zc_pqNuPSZtor76qcY9zYTK5mmEKm8FMFWkvhWqQHrauUR3wZEQPnAlRrYymi/exec"
+
+document.getElementById("loc").addEventListener("change",function(){
+
+currentLoc=this.value
+document.getElementById("sku").focus()
+
+})
+
+document.getElementById("sku").addEventListener("change",function(){
+
+let sku=this.value
+
+fetch(api,{
+method:"POST",
+body:JSON.stringify({
+location:currentLoc,
+sku:sku,
+qty:1
+})
+})
+
+this.value=""
+document.getElementById("loc").value=""
+document.getElementById("loc").focus()
+
+})
+
+</script>
+
+</body>
+</html>
