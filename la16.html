@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Inventory Check</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  
+
 <style>
 body{font-family:Arial;text-align:center;margin-top:80px}
 input{font-size:28px;padding:10px;width:300px;margin:20px}
@@ -25,6 +25,23 @@ SKU<br>
 <input id="sku">
 
 <script>
+
+  function playSuccessSound() {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+    gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.15);
+  }
+
 
 let currentLoc=""
 
@@ -53,6 +70,7 @@ qty:1
 this.value=""
 document.getElementById("loc").value=""
 document.getElementById("loc").focus()
+playSuccessSound();
 
 })
 
