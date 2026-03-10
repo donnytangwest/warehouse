@@ -55,6 +55,14 @@ SKU<br>
       oscillator.stop(audioCtx.currentTime + 0.25);
     }
 
+function playOKVoice(){
+  const msg = new SpeechSynthesisUtterance("OK");
+  msg.lang = "en-US";
+  msg.rate = 1.2;
+  msg.pitch = 1;
+  speechSynthesis.speak(msg);
+}
+    
 let currentLoc=""
 
 let api="https://script.google.com/macros/s/AKfycbxvwT0Zc_pqNuPSZtor76qcY9zYTK5mmEKm8FMFWkvhWqQHrauUR3wZEQPnAlRrYymi/exec"
@@ -82,7 +90,7 @@ document.getElementById("sku").addEventListener("change",function(){
   this.value=""
   document.getElementById("loc").value=""
   document.getElementById("loc").focus()
-  playSuccessSound();
+  playOKVoice();
 })
 
 </script>
