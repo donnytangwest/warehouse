@@ -13,6 +13,7 @@ input{font-size:14px;padding:10px;width:300px;margin:5px}
 </head>
 
 <body>
+<div id="result" style="color:red"></div>
 Location<br>
 <input id="loc" autofocus>
 
@@ -71,6 +72,7 @@ document.getElementById("loc").addEventListener("change",function(){
 
   currentLoc=this.value
   document.getElementById("sku").focus()
+  document.getElementById("result").innerHTML="";
 
 })
 
@@ -90,6 +92,7 @@ document.getElementById("sku").addEventListener("change",function(){
   this.value=""
   document.getElementById("loc").value=""
   document.getElementById("loc").focus()
+  document.getElementById("result").innerHTML="OK";
   playSuccessSound();
 })
 
