@@ -1,1 +1,102 @@
-https://script.google.com/macros/s/AKfycbyKgVcwlwuPF5Qyscza1WzNnuRj7SRKiAWuRhREmvW5b32FClS1BzEdP7abKPHdMpGI/exec
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>[GA4]Inventory Check</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<style>
+body{font-family:Arial;text-align:center;margin-top:10px}
+input{font-size:14px;padding:10px;width:300px;margin:5px}
+</style>
+
+</head>
+
+<body>
+<div id="result"></div>
+===【GA4】Location ===<br>
+<input id="loc" autofocus>
+
+<br>
+
+=== SKU ===<br>
+<input id="sku">
+
+<script>
+
+    function playSuccessSound() {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+      gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.15);
+    }
+
+    function playErrorSound() {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.type = "square";
+      oscillator.frequency.setValueAtTime(300, audioCtx.currentTime);
+      gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.25);
+    }
+
+function playOKVoice(){
+  const msg = new SpeechSynthesisUtterance("OK");
+  msg.lang = "en-US";
+  msg.rate = 1.2;
+  msg.pitch = 1;
+  speechSynthesis.speak(msg);
+}
+    
+let currentLoc=""
+
+let api="https://script.google.com/macros/s/AKfycbyKgVcwlwuPF5Qyscza1WzNnuRj7SRKiAWuRhREmvW5b32FClS1BzEdP7abKPHdMpGI/exec"
+
+document.getElementById("loc").addEventListener("change",function(){
+
+  currentLoc=this.value
+  document.getElementById("sku").focus()
+  document.getElementById("result").innerHTML=currentLoc;
+
+})
+
+document.getElementById("sku").addEventListener("change",function(){
+
+  let sku=this.value
+
+  fetch(api,{
+    method:"POST",
+    body:JSON.stringify({
+      location:currentLoc,
+      sku:sku,
+      qty:1
+    })
+  })
+
+  this.value=""
+  document.getElementById("loc").value=""
+  document.getElementById("loc").focus()
+  document.getElementById("result").innerHTML="<font color='red'>OK</font><br/> LC: "+currentLoc+"<br/>SKU: "+sku;
+  playSuccessSound();
+})
+
+</script>
+
+</body>
+</html>
