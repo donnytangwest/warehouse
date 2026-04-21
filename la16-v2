@@ -66,7 +66,7 @@ function playOKVoice(){
     
 let currentLoc=""
 
-let api="https://script.google.com/macros/s/AKfycbxvwT0Zc_pqNuPSZtor76qcY9zYTK5mmEKm8FMFWkvhWqQHrauUR3wZEQPnAlRrYymi/exec"
+let api="https://script.google.com/macros/s/AKfycbyn46zuxPzh7-U_OcI5CmYpUtd8VtTMSa0gkjrp7XqK9oZufE_DXpkgx92nhye19srh/exec"
 
 document.getElementById("loc").addEventListener("change",function(){
 
